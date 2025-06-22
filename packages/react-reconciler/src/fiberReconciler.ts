@@ -1,4 +1,5 @@
 import type { ReactElementType } from 'react'
+import type { UpdateQueue } from './updateQueue'
 import { FiberNode, FiberRootNode } from './fiber'
 import { createUpdate, createUpdateQueue, enqueueUpdate } from './updateQueue'
 import { scheduleUpdateOnFiber } from './workLoop'
@@ -15,7 +16,7 @@ export function updateContainer(element: ReactElementType, root: FiberRootNode) 
   // 设置调度 链表
   const hostRootFiber = root.current
   const update = createUpdate(element)
-  enqueueUpdate(hostRootFiber.updateQueue, update)
+  enqueueUpdate(hostRootFiber.updateQueue as UpdateQueue, update)
   scheduleUpdateOnFiber(hostRootFiber)
 
   return element

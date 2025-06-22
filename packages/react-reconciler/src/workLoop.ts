@@ -36,7 +36,7 @@ function renderRoot(root: FiberRootNode) {
   workLoop()
 
   // 3. commitRoot
-  commitRoot()
+  // commitRoot()
 }
 
 function workLoop() {
@@ -58,7 +58,8 @@ function performUnitOfWork(wip: FiberNode) {
 }
 
 function completeUnitOfWork() {
-  completeWork()
+  workInProgress = null
+  // completeWork()
 }
 
 function commitRoot() {}

@@ -1,3 +1,4 @@
+import type { UpdateQueue } from './updateQueue'
 import type { WorkTag } from './workTags'
 
 export class FiberNode {
@@ -9,7 +10,7 @@ export class FiberNode {
   return: FiberNode | null = null // 父节点
   pendingProps: any
   key: string | null
-  updateQueue: any
+  updateQueue: UpdateQueue | null
   alternate: FiberNode | null = null // 双缓冲
   memoizedProps: any = null // 上一次的 props
   memoizedState: any = null // 上一次的 state
@@ -50,6 +51,12 @@ export function createWorkInProgress(fiber: FiberNode, pendingProps: any): Fiber
     // update
     wip.pendingProps = pendingProps // 更新 props
   }
+
+  wip.type = fiber.type
+  wip.updateQueue = fiber.updateQueue
+  wip.child = fiber.child
+  wip.memoizedProps = fiber.memoizedProps
+  wip.memoizedState = fiber.memoizedState
 
   return wip
 }
