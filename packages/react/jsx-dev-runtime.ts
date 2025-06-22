@@ -1,3 +1,4 @@
+import type { ReactElementType } from '.'
 import { REACT_ELEMENT_TYPE } from 'shared'
 
 function ReactElement(type: string, props: any, key: string | null) {
@@ -10,6 +11,6 @@ function ReactElement(type: string, props: any, key: string | null) {
   }
 }
 
-export function jsxDEV(type: string, props: any, key: string | null) {
+export function jsxDEV(type: string, props: any, key: string | null): ReactElementType {
   return ReactElement(type, props, key)
 }
