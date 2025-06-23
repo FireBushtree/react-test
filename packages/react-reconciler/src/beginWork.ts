@@ -1,5 +1,6 @@
 import type { FiberNode } from './fiber'
 import type { UpdateQueue } from './updateQueue'
+import { mountChildFibers, reconcileChildFibers } from './childFibers'
 import { processUpdateQueue } from './updateQueue'
 import { HostComponent, HostRoot, HostText } from './workTags'
 
@@ -28,8 +29,22 @@ function updateHostRoot(wip: FiberNode) {
 
   // 计算最新的state
   const { memoizedState } = processUpdateQueue(baseState, pending)
-  wip.memoizedState = memoizedState
+  wip.memoizedState = memoizedState // 就是 <App /> 组件的 state
 
   // 构建 child 节点 -> child FiberNode
+  reconcileChildren(wip, wip.memoizedState)
   return wip.child
+}
+
+function reconcileChildren(wip: FiberNode, children: any) {
+  const current = wip.alternate
+
+  if (current === null) {
+    // mount 阶段
+    wip.child = mountChildFibers(wip, null, children)
+  }
+  else {
+    // update 阶段
+    wip.child = reconcileChildFibers(wip, current?.child, children)
+  }
 }
