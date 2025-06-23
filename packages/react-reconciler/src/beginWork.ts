@@ -10,7 +10,7 @@ export function beginWork(wip: FiberNode): FiberNode | null {
     case HostRoot:
       return updateHostRoot(wip)
     case HostComponent:
-      return null
+      return updateHostComponent(wip)
     case HostText:
       return null
 
@@ -33,6 +33,14 @@ function updateHostRoot(wip: FiberNode) {
 
   // 构建 child 节点 -> child FiberNode
   reconcileChildren(wip, wip.memoizedState)
+  return wip.child
+}
+
+/**
+ * HostComponent 就是 <div>hello</div> 这种原生dom， 不需要去维护state
+ */
+function updateHostComponent(wip: FiberNode) {
+  reconcileChildren(wip, wip.pendingProps.children)
   return wip.child
 }
 

@@ -1,5 +1,9 @@
+import type { ReactElementType } from 'react'
+import type { FiberFlags } from './fiberFlags'
 import type { UpdateQueue } from './updateQueue'
 import type { WorkTag } from './workTags'
+import { NoFlag } from './fiberFlags'
+import { HostComponent } from './workTags'
 
 export class FiberNode {
   tag: WorkTag
@@ -14,6 +18,7 @@ export class FiberNode {
   alternate: FiberNode | null = null // 双缓冲
   memoizedProps: any = null // 上一次的 props
   memoizedState: any = null // 上一次的 state
+  flags: FiberFlags // FiberFlags
 
   constructor(tag: WorkTag, pendingProps: any, key: string | null) {
     this.tag = tag
@@ -22,6 +27,7 @@ export class FiberNode {
     this.key = key
     this.stateNode = null
     this.updateQueue = null
+    this.flags = NoFlag
   }
 }
 
@@ -59,4 +65,13 @@ export function createWorkInProgress(fiber: FiberNode, pendingProps: any): Fiber
   wip.memoizedState = fiber.memoizedState
 
   return wip
+}
+
+export function createFiberFromElement(element: ReactElementType): FiberNode {
+  const { key, props } = element
+
+  const tag: WorkTag = HostComponent
+
+  // TODO function component
+  return new FiberNode(tag, props, key)
 }

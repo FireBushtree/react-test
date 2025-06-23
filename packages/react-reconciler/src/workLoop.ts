@@ -48,6 +48,7 @@ function workLoop() {
 
 function performUnitOfWork(wip: FiberNode) {
   const next = beginWork(wip)
+  wip.memoizedProps = wip.pendingProps // 更新 props
 
   if (next === null) {
     completeUnitOfWork()
