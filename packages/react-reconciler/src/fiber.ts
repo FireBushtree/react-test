@@ -18,7 +18,8 @@ export class FiberNode {
   alternate: FiberNode | null = null // 双缓冲
   memoizedProps: any = null // 上一次的 props
   memoizedState: any = null // 上一次的 state
-  flags: FiberFlags // FiberFlags
+  flags: number // FiberFlags
+  subTreeFlags: number // FiberFlags
 
   constructor(tag: WorkTag, pendingProps: any, key: string | null) {
     this.tag = tag
@@ -28,6 +29,7 @@ export class FiberNode {
     this.stateNode = null
     this.updateQueue = null
     this.flags = NoFlag
+    this.subTreeFlags = NoFlag
   }
 }
 

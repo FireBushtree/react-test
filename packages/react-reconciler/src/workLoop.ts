@@ -1,6 +1,6 @@
 import type { FiberNode, FiberRootNode } from './fiber'
 import { beginWork } from './beginWork'
-import { completeWork } from './complete'
+import { completeWork } from './completeWork'
 import { createWorkInProgress } from './fiber'
 import { HostRoot } from './workTags'
 
@@ -36,7 +36,7 @@ function renderRoot(root: FiberRootNode) {
   workLoop()
 
   // 3. commitRoot
-  // commitRoot()
+  commitRoot()
 }
 
 function workLoop() {
