@@ -1,3 +1,4 @@
+import path from 'node:path'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import { resolvePkgPath } from '../utils'
@@ -18,10 +19,10 @@ export default defineConfig({
         find: 'react-dom',
         replacement: resolvePkgPath('react-dom'),
       },
-      // {
-      //   find: 'hostConfig',
-      //   replacement: path.resolve(resolvePkgPath('react-dom'), './src/hostConfig.js'),
-      // },
+      {
+        find: 'hostConfig',
+        replacement: path.resolve(resolvePkgPath('react-dom'), './src/hostConfig.js'),
+      },
     ],
   },
 })

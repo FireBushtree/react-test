@@ -51,16 +51,21 @@ function performUnitOfWork(wip: FiberNode) {
   wip.memoizedProps = wip.pendingProps // 更新 props
 
   if (next === null) {
-    completeUnitOfWork()
+    completeUnitOfWork(wip)
   }
   else {
     workInProgress = next
   }
 }
 
-function completeUnitOfWork() {
-  workInProgress = null
-  // completeWork()
+function completeUnitOfWork(fiber: FiberNode) {
+  let node: FiberNode | null = fiber
+
+  while (node !== null) {
+    completeWork(node)
+    node = node.return
+    workInProgress = node
+  }
 }
 
 function commitRoot() {}

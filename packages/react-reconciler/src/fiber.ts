@@ -8,7 +8,7 @@ import { HostComponent } from './workTags'
 export class FiberNode {
   tag: WorkTag
   type: string | null
-  stateNode: HTMLElement | FiberRootNode | null
+  stateNode: HTMLElement | FiberRootNode | Text | null
   child: FiberNode | null = null // 子节点
   sibling: FiberNode | null = null // 兄弟节点
   return: FiberNode | null = null // 父节点
@@ -68,10 +68,12 @@ export function createWorkInProgress(fiber: FiberNode, pendingProps: any): Fiber
 }
 
 export function createFiberFromElement(element: ReactElementType): FiberNode {
-  const { key, props } = element
+  const { key, props, type } = element
 
   const tag: WorkTag = HostComponent
 
   // TODO function component
-  return new FiberNode(tag, props, key)
+  const fiber = new FiberNode(tag, props, key)
+  fiber.type = type
+  return fiber
 }
